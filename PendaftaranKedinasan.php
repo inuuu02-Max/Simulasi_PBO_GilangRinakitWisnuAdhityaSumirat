@@ -29,3 +29,4 @@ class PendaftaranKedinasan extends Pendaftaran {
         return $data;
     }
 }
+?>

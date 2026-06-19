@@ -1,31 +1,20 @@
 <?php
-require_once 'Pendaftaran.php';
+abstract class Pendaftaran {
+    protected $id_pendaftaran;
+    protected $nama_calon;
+    protected $asal_sekolah;
+    protected $nilai_ujian;
+    protected $biayaPendaftaranDasar;
 
-class PendaftaranReguler extends Pendaftaran {
-    private $pilihanProdi;
-    private $lokasiKampus;
-
-    public function __construct($id, $nama, $asal, $nilai, $biayaDasar, $prodi, $lokasi) {
-        parent::__construct($id, $nama, $asal, $nilai, $biayaDasar);
-        $this->pilihanProdi = $prodi;
-        $this->lokasiKampus = $lokasi;
+    public function __construct($id, $nama, $asal, $nilai, $biayaDasar) {
+        $this->id_pendaftaran = $id;
+        $this->nama_calon = $nama;
+        $this->asal_sekolah = $asal;
+        $this->nilai_ujian = $nilai;
+        $this->biayaPendaftaranDasar = $biayaDasar;
     }
 
-    public function hitungTotalBiaya() {
-        return $this->biayaPendaftaranDasar; 
-    }
-
-    public function tampilkanInfoJalur() {
-        return "<b>Prodi:</b> " . $this->pilihanProdi . "<br><b>Kampus:</b> " . $this->lokasiKampus;
-    }
-
-    public static function getDaftarReguler($db) {
-        $sql = "SELECT * FROM tabel_pendaftaran WHERE jalur_pendaftaran = 'Reguler'";
-        $result = $db->query($sql);
-        $data = [];
-        while ($row = $result->fetch_assoc()) {
-            $data[] = new PendaftaranReguler($row['id_pendaftaran'], $row['nama_calon'], $row['asal_sekolah'], $row['nilai_ujian'], $row['biaya_pendaftaran_dasar'], $row['pilihan_prodi'], $row['lokasi_kampus']);
-        }
-        return $data;
-    }
+    abstract public function hitungTotalBiaya();
+    abstract public function tampilkanInfoJalur();
 }
+?>

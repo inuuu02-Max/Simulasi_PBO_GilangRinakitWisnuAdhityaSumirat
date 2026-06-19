@@ -29,3 +29,4 @@ class PendaftaranPrestasi extends Pendaftaran {
         return $data;
     }
 }
+?>
